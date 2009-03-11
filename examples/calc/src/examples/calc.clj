@@ -2,16 +2,18 @@
   (:use clj-android)
   (:import (android.widget ArrayAdapter)))
 
-(def calc-stack (ref '()))
+(def calc-stack (ref []))
 
 (defn calc-push [value]
   (dosync (commute calc-stack conj value)))
 
 (defn calc-pop []
-  (dosync (let [top (first @calc-stack)] (commute calc-stack rest) top)))
+  (dosync (let [top (peek @calc-stack)]
+            (commute calc-stack pop)
+            top)))
 
 (defn calc-list-adapter [context]
-  (new ArrayAdapter context android.R$layout/simple_list_item_1 (into-array (map #(str %) @calc-stack))))
+  (new ArrayAdapter context android.R$layout/simple_list_item_1 (into-array (map #(str %) (rseq @calc-stack)))))
 
 (defmacro calc-do [& body]
   `(do
