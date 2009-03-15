@@ -54,10 +54,12 @@
                           (include? (key-event-key-code :enter :space) key-code)
                           (calc-do)
 
-                          (and (= key-code (key-event-key-code :del)) (= (get-text) ""))
+                          (and (= key-code (key-event-key-code :del))
+                               (= (get-text) "")
+                               (> (count @calc-stack) 0))
                           (calc-do (calc-pop))
                             
-                          (and (include? (keys calc-opers) char))
+                          (include? (keys calc-opers) char)
                           (calc-do
                             (if (> (count @calc-stack) 1)
                               (calc-push (apply (get calc-opers char) (swap (calc-pop) (calc-pop))))))
