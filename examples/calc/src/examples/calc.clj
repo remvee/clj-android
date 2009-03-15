@@ -2,6 +2,17 @@
   (:use clj-android)
   (:import (android.widget ArrayAdapter)))
 
+(defmacro get-text []
+  `(str (.getText ~'edit-view)))
+(defmacro set-text [value]
+  `(.setText ~'edit-view ~value))
+(defmacro set-list [lst]
+  `(.setAdapter ~'list-view
+                (ArrayAdapter.
+                 ~'context
+                 android.R$layout/simple_list_item_1
+                 (into-array (map str (rseq ~lst))))))
+
 (def calc-stack (ref []))
 
 (defn calc-push [value]
@@ -12,18 +23,6 @@
             (commute calc-stack pop)
             top)))
 
-(defn calc-list-adapter [context]
-  (new ArrayAdapter context android.R$layout/simple_list_item_1 (into-array (map #(str %) (rseq @calc-stack)))))
-
-(defmacro calc-do [& body]
-  `(do
-     (if (not= 0 (.length (.getText ~'edit-view)))
-       (calc-push (Double/parseDouble (str (.getText ~'edit-view)))))
-     ~@body
-     (.setText ~'edit-view "")
-     (.setAdapter ~'list-view (calc-list-adapter ~'context))
-     true))
-
 (def calc-opers {\+ #'+
                  \- #'-
                  \/ #'/
@@ -32,12 +31,22 @@
 (def calc-allowed-chars (.toCharArray "0123456789."))
 (def calc-allowed-key-codes (key-event-key-code :back :del))
 
+(defmacro calc-do [& body]
+  `(do
+     (when-not (= (get-text) "")
+       (calc-push (Double/parseDouble (get-text))))
+     ~@body
+     (set-text "")
+     (set-list @calc-stack)
+     true))
+
 (defn include? [list value] (some #(= value %) list))
 (defn swap [a b] (list b a))
 
 (defactivity Main
-  (:create (let [list-view (view [ListView {:adapter (calc-list-adapter context)}])
+  (:create (let [list-view (view [ListView {}])
                  edit-view (view [EditText {}])]
+             (set-list @calc-stack)
              (on-key edit-view
                      (if (= (.getAction event) (key-event-action :down))
                        (let [char (char (.getUnicodeChar event))]
@@ -45,7 +54,7 @@
                           (include? (key-event-key-code :enter :space) key-code)
                           (calc-do)
 
-                          (and (= key-code (key-event-key-code :del)) (= 0 (.length (.getText edit-view))))
+                          (and (= key-code (key-event-key-code :del)) (= (get-text) ""))
                           (calc-do (calc-pop))
                             
                           (and (include? (keys calc-opers) char))
