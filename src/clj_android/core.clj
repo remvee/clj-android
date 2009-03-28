@@ -5,7 +5,7 @@
 
 (defmacro log [message]
   "Send a debug log message."
-  `(android.util.Log/d ~(str (ns-name *ns*) ~message)))
+  `(android.util.Log/d ~(str (ns-name *ns*)) ~message))
 
 (defmacro start-tracing [name]
   "Start method tracing."
