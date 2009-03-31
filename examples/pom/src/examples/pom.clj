@@ -12,8 +12,8 @@
                                 (= 0  (Math/round today)) "New"
                                 (= 50  (Math/round today))
                                 (if (> tomorrow today) "at the First Quarter" "at the Last Quarter")
-                                true (str
-                                      (if (> tomorrow today) "Waxing" "Waning") " "
-                                      (if (> today 50) "Gibbous" "Crescent ")
-                                      (format " (%1.0f%% of Full)" today))))]
+                                :else (str
+                                       (if (> tomorrow today) "Waxing" "Waning") " "
+                                       (if (> today 50) "Gibbous" "Crescent ")
+                                       (format " (%1.0f%% of Full)" today))))]
              (content-view [TextView {:text message}]))))
