@@ -14,3 +14,16 @@
 (defmacro stop-tracing []
   "Stop method tracing."
   `(android.os.Debug/stopMethodTracing))
+
+(defmacro log-time [tag form]
+  "Log amount of time taken to evalute the given form."
+  `(let [before# (System/nanoTime)
+         result# ~form
+         amount# (- (System/nanoTime) before#)]
+     (log (str ~tag " took " (cond (> amount# 1000000000)
+                                   (format "%.3fs" (float (/ amount# 1000000000)))
+                                   (> amount# 1000000)
+                                   (format "%dms" (int (/ amount# 1000000)))
+                                   :else
+                                   (str amount# "%dns"))))
+     result#))
