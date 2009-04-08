@@ -1,5 +1,7 @@
 A library/framework for building Android applications using Clojure.
 
+WARNING: experimental and incomplete!
+
 
 Dependencies
 ------------
