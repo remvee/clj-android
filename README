@@ -1,4 +1,39 @@
 A library/framework for building Android applications using Clojure.
 
-See the examples for details.
 
+Dependencies
+------------
+
+This framework depends on the Android SDK and a fork of the Clojure
+core which works around some incompatibilities of Dalvik.  You can find
+it at:
+
+  http://github.com/remvee/clojure/
+
+The Android SDK is expected to be installed in a directory called
+"sdk" next to the "clj-android" directory.  The Clojure fork should be
+installed at the same location.  Don't forget to compile the Clojure
+jar.
+
+
+Examples
+--------
+
+You can find examples in the "examples" directory.  To build the
+examples first run "ant" in the toplevel directory, start the Android
+emulator and run "ant install" in one of the example directories.
+
+
+Known issues
+------------
+
+Applications take long to startup because of the Clojure bootstrap
+procedure.
+
+Idiomatic Clojure code is slow.  The functional nature of Clojure
+forces the DalvikVM to spend a lot of time on garbage collection.
+
+
+Copyright
+---------
+(c) 2009 R.W. van 't Veer
