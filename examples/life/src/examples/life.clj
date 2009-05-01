@@ -34,7 +34,7 @@
  :extends android.view.View)
 
 (defn -onDraw [view canvas]
-  (let [red (doto (android.graphics.Paint.) (. setColor android.graphics.Color/RED))]
+  (let [red (doto (android.graphics.Paint.) (. setColor android.graphics.Color/GREEN))]
     (doseq [[[x y] state] (filter last @cells)]
       (let [[x y] [(* 10 x) (* 10 y)]]
         (doto canvas
@@ -48,7 +48,7 @@
      (. (Thread.
          #(loop []
             (when @running
-              (calc-state determine-new-state)
+              (log-time "calc-state" (calc-state determine-new-state))
               (ui (.invalidate life-view)))
             (Thread/sleep 100)
             (recur)))

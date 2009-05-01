@@ -1,2 +1,5 @@
 /bin
 /default.properties
+gen
+local.properties
+default.properties
