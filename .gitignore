@@ -1,2 +1,3 @@
-/classes
-/clj-android.jar
+classes
+clj-android.jar
+local.properties

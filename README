@@ -1,6 +1,6 @@
 A library/framework for building Android applications using Clojure.
 
-WARNING: experimental and incomplete!
+WARNING: experimental, slow and incomplete!
 
 
 Dependencies
@@ -12,10 +12,17 @@ it at:
 
   http://github.com/remvee/clojure/
 
-The Android SDK is expected to be installed in a directory called
-"sdk" next to the "clj-android" directory.  The Clojure fork should be
-installed at the same location.  Don't forget to compile the Clojure
-jar.
+Use one of the dalvik branches (1.0.x-dalvik etc.).
+
+Setup a local.properties file in the root directory of the clj-android
+project to provide the following properties:
+
+* sdk-location
+* clojure-location
+
+The point to the directories containing resp. the Android SDK and the
+clojure fork as mentioned above.  Don't forget to build clojure.jar in
+the latter.
 
 
 Examples

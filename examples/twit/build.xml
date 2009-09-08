@@ -4,7 +4,7 @@
     <!-- The local.properties file is created and updated by the 'android' tool.
          It contain the path to the SDK. It should *NOT* be checked in in Version
          Control Systems. -->
-    <property file="local.properties"/>
+    <property file="../../local.properties"/>
 
     <!-- The build.properties file can be created by you and is never touched
          by the 'android' tool. This is the place to change some of the default property values
@@ -58,6 +58,10 @@
          targets are used.
     -->
     <setup />
+
+    <property name="clj-android-jar" location="../../clj-android.jar"/>
+    <property name="clojure-jar" location="${clojure-location}/clojure.jar"/>
+    <property name="android-jar" location="${sdk-location}/platforms/android-1.5/android.jar"/>
 
     <!-- Compile this project's .java and .clj files into .class files. -->
     <target name="compile" depends="resource-src, aidl">

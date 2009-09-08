@@ -1,5 +1,3 @@
-/bin
-/default.properties
+bin
 gen
 local.properties
-default.properties
