@@ -24,6 +24,10 @@ The point to the directories containing resp. the Android SDK and the
 clojure fork as mentioned above.  Don't forget to build clojure.jar in
 the latter.
 
+Make sure you have the 1.5 Android SDK installed;
+
+  android update sdk
+
 
 Examples
 --------
